@@ -10,7 +10,7 @@ async function chartIt() {
       labels: xlabels,
       datasets: [
         {
-          label: "Frequency of Cancer Diagnoses by Racial Backgrounds",
+          label: "Count",
           data: ylabels,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
@@ -33,6 +33,7 @@ async function chartIt() {
       ]
     },
     options: {
+      legend: { display: false },
       title: {
         display: true,
         text: "Frequency of Cancer Diagnoses by Racial Backgrounds",
