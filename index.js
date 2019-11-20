@@ -1,13 +1,8 @@
+let xlabels = [];
+let ylabels = [];
 chartIt();
 async function chartIt() {
   await getData();
-  let xlabels = [
-    "White",
-    "Black/African American",
-    "Multi-racial",
-    "Other Race"
-  ];
-  let ylabels = [406, 60, 8, 0];
   const ctx = document.getElementById("chart1").getContext("2d");
   const myChart = new Chart(ctx, {
     type: "bar",
@@ -52,12 +47,12 @@ async function chartIt() {
 }
 
 async function getData() {
-  $.ajax({
+  await $.ajax({
     url:
       "https://health.data.ny.gov/resource/gnzp-ekau.json?$where=UPPER(ccs_diagnosis_description)%20like%20%27%25CANCER%25%27",
     type: "GET",
     data: {
-      $limit: 500,
+      $limit: 1000,
       $$app_token: "tm3ORnaNFHUQzXCE04B4KWQvE"
     }
   }).done(function(data) {
@@ -67,7 +62,7 @@ async function getData() {
     // store data.map to variable
     // loop through it, each unique name add to xlabels
 
-    //get unique labvels
+    //get unique labels
     let labels = [];
     let obj = {};
     let arr = data.map(e => e.race);
@@ -78,7 +73,7 @@ async function getData() {
     }
     //[white, african, multi]
 
-    //put labels in an object as they key
+    //put labels in an object as the key
 
     for (let i = 0; i < labels.length; i++) {
       obj[labels[i]] = 0;
@@ -109,19 +104,7 @@ async function getData() {
     }
     console.log(obj);
     xlabels = Object.keys(obj);
-    console.log(xlabels);
-    console.log("here", xlabels);
+    ylabels = Object.values(obj);
   });
   //{white: 324}
-
-  //let obj = { white : 34, african: 32}
-  //   const table = data;
-  //   table.map(person => {
-  //     const white = person.race === "White";
-  //     xlabels.push(white);
-  //     const multiR = person.race === "Multi-racial";
-  //     xlabels.push(multiR);
-  //     const black = person.race === "Black/African American";
-  //     xlabels.push(black);
-  //   });
 }
