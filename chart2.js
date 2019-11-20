@@ -1,17 +1,17 @@
-let xlabels = [];
-let ylabels = [];
+let xlabels2 = [];
+let ylabels2 = [];
 chartIt();
 async function chartIt() {
   await getData();
-  const ctx = document.getElementById("chart1").getContext("2d");
-  const myChart = new Chart(ctx, {
-    type: "bar",
+  const ctx2 = document.getElementById("chart2").getContext("2d");
+  const myChart = new Chart(ctx2, {
+    type: "pie",
     data: {
-      labels: xlabels,
+      labels: xlabels2,
       datasets: [
         {
           label: "Frequency of Cancer Diagnoses by Racial Backgrounds",
-          data: ylabels,
+          data: ylabels2,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(54, 162, 235, 0.2)",
@@ -35,17 +35,8 @@ async function chartIt() {
     options: {
       title: {
         display: true,
-        text: "Frequency of Cancer Diagnoses by Racial Backgrounds",
+        text: "Frequency of Cancer Diagnoses by Age",
         fontSize: 20
-      },
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
       }
     }
   });
@@ -70,13 +61,12 @@ async function getData() {
     //get unique labels
     let labels = [];
     let obj = {};
-    let arr = data.map(e => e.race);
+    let arr = data.map(e => e.age_group);
     for (let i = 0; i < arr.length; i++) {
       if (!labels.includes(arr[i])) {
         labels.push(arr[i]);
       }
     }
-    //[white, african, multi]
 
     //put labels in an object as the key
 
@@ -85,31 +75,33 @@ async function getData() {
     }
     console.log(obj);
 
-    // {white: 0, african : 0}
-
     //lop through data and save it in object
     for (let i = 0; i < arr.length; i++) {
       switch (arr[i]) {
-        case "White":
-          obj["White"] = obj["White"] + 1;
+        case "70 or Older":
+          obj["70 or Older"] = obj["70 or Older"] + 1;
           break;
 
-        case "Black/African American":
-          obj["Black/African American"] = obj["Black/African American"] + 1;
+        case "50 to 69":
+          obj["50 to 69"] = obj["50 to 69"] + 1;
           break;
 
-        case "Multi-racial":
-          obj["Multi-racial"] = obj["Multi-racial"] + 1;
+        case "30 to 49":
+          obj["30 to 49"] = obj["30 to 49"] + 1;
           break;
 
-        case "Other Race":
-          obj["Other Race"] = obj["Other Race"] + 1;
+        case "18 to 29":
+          obj["18 to 29"] = obj["18 to 29"] + 1;
+          break;
+
+        case "0 to 17":
+          obj["0 to 17"] = obj["0 to 17"] + 1;
           break;
       }
     }
     console.log(obj);
-    xlabels = Object.keys(obj);
-    ylabels = Object.values(obj);
+    xlabels2 = Object.keys(obj);
+    ylabels2 = Object.values(obj);
   });
   //{white: 324}
 }
